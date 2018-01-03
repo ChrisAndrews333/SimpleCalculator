@@ -1,0 +1,80 @@
+﻿@model SimpleCalculator.Models.Calculation
+
+<h2>Calculator</h2>
+
+@using (Html.BeginForm("", "Calculations", FormMethod.Post, htmlAttributes: new { @id = "calculator-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Param1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Param1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Param1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr />
+        <div id="operator-container" class="row">
+            <div class="col-xs-3">
+                <button id="Add" class="btn btn-lg btn-default font-weight-bold">+</button>
+            </div>
+            <div class="col-xs-3">
+                <button id="Subtract" class="btn btn-lg btn-default font-weight-bold">-</button>
+            </div>
+          <div class="col-xs-3">
+                <button id="Multiply" class="btn btn-lg btn-default font-weight-bold">*</button>
+            </div>
+            <div class="col-xs-3">
+                <button id="Divide" class="btn btn-lg btn-default font-weight-bold">/</button>
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Param2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Param2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Param2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group text-center">
+            <div class="col-xs-12">
+                <input type="submit" value="Calculate" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+@{ Html.RenderPartial("_History", (IEnumerable<SimpleCalculator.Models.Calculation>)ViewBag.hist);}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function setOperator(id, url)
+        {
+            $('#calculator-form').attr('action', url);
+            $('#operator-container div button').removeClass('btn-info').addClass('btn-default');
+            $('#' + id).removeClass("btn-default").addClass('btn-info');
+        }
+
+        $('#Add').on('click', function (e) {
+            e.preventDefault();
+            setOperator(this.id, '@Url.Action("Add")');
+        });
+        $('#Subtract').on('click', function (e) {
+            e.preventDefault();
+            setOperator(this.id, '@Url.Action("Subtract")');
+        });
+        $('#Multiply').on('click', function (e) {
+            e.preventDefault();
+            setOperator(this.id, '@Url.Action("Multiply")');
+        });
+        $('#Divide').on('click', function (e) {
+            e.preventDefault();
+            setOperator(this.id, '@Url.Action("Divide")');
+        });
+    </script>
+}

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SimpleCalculator.Models.Calculation>
+
+<h2>History</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Param1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Operator)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Param2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Result)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Param1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Operator)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Param2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Result)
+            </td>
+        </tr>
+    }
+
+</table>
